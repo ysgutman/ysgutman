@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도덕 교육 e-교과서</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        .content {
+            display: none;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .left-column {
+            width: 30%;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-right: 1px solid #ddd;
+        }
+        .right-column {
+            width: 70%;
+            padding: 15px;
+        }
+        .topic {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e6e6e6;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .topic:hover {
+            background-color: #d3d3d3;
+        }
+        .feedback-container, .gpt-container {
+            margin: 20px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-radius: 5px;
+        }
+        .feedback, .gpt-response {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* 입력 칸 스타일 */
+        #studentInput, #gptInput {
+            width: 100%;
+            height: 100px;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>도덕 교육 e-교과서</h1>
+        <p>온라인 도덕 교육 여정에 오신 것을 환영합니다!</p>
+    </header>
+
+    <nav>
+        <a href="#home" onclick="showContent('home')">홈</a>
+        <a href="#about" onclick="showContent('about')">정보윤리</a>
+        <a href="#lessons" onclick="showContent('lessons')">과학윤리</a>
+        <a href="#contact" onclick="showContent('contact')">생명윤리</a>
+        <a href="#feedback" onclick="showContent('feedback')">자신의 생각 적기</a>
+        <a href="#gpt" onclick="showContent('gpt')">Claude에게 물어보기</a>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="content">
+        <div class="container">
+            <div class="left-column">
+                <div class="topic" onclick="showTopic('home', 'welcome')">환영합니다</div>
+                <div class="topic" onclick="showTopic('home', 'values')">핵심 가치</div>
+                <div class="topic" onclick="showTopic('home', 'goal')">우리의 목표</div>
+            </div>
+            <div class="right-column" id="home-right">
+                <h2>도덕 교육 e-교과서에 오신 것을 환영합니다</h2>
+                <p>왼쪽에서 주제를 선택하여 자세히 알아보세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="content">
+        <div class="container">
+            <div class="left-column">
+                <div class="topic" onclick="showTopic('about', 'mission')">정보화 시대의 도덕문제</div>
+                <div class="topic" onclick="showTopic('about', 'vision')">정보화 시대에 필요한 도덕적 책임</div>
+                <div class="topic" onclick="showTopic('about', 'history')">정보통신 매체를 올바르게 사용하는 태도</div>
+            </div>
+            <div class="right-column" id="about-right">
+                <h2>이 e-교과서에 대하여</h2>
+                <p>왼쪽에서 주제를 선택하여 자세히 알아보세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lessons Section -->
+    <div id="lessons" class="content">
+        <div class="container">
+            <div class="left-column">
+                <div class="topic" onclick="showTopic('lessons', 'respect')">과학기술은 인간의 삶을 어떻게 바꾸었나</div>
+                <div class="topic" onclick="showTopic('lessons', 'honesty')">과학기술은 모든 문제를 해결해 줄 수 있나</div>
+                <div class="topic" onclick="showTopic('lessons', 'responsibility')">과학기술에 책임이 필요한 이유는</div>
+            </div>
+            <div class="right-column" id="lessons-right">
+                <h2>수업</h2>
+                <p>왼쪽에서 주제를 선택하여 학습을 시작하세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="content">
+        <div class="container">
+            <div class="left-column">
+                <div class="topic" onclick="showTopic('contact', 'support')">무엇이 삶을 소중하게 만드는가</div>
+                <div class="topic" onclick="showTopic('contact', 'feedback')">죽음을 어떻게 생각해야 할까</div>
+                <div class="topic" onclick="showTopic('contact', 'inquiry')">삶을 의미 있게 살아가기</div>
+            </div>
+            <div class="right-column" id="contact-right">
+                <h2>문의</h2>
+                <p>왼쪽에서 주제를 선택하여 자세한 정보를 얻으세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(id) {
+            const sections = document.querySelectorAll('.content');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+
+            // Reset the right column content for each section
+            const rightColumn = document.getElementById(`${id}-right`);
+            rightColumn.innerHTML = `<h2>${capitalize(id)}</h2><p>여러 도덕적 주제에 대해 자율적으로 공부해보세요.</p>`;
+        }
+
+        function showTopic(section, topic) {
+            const rightColumn = document.getElementById(`${section}-right`);
+            let content = '';
+
+            switch (section) {
+                case 'home':
+                    if (topic === 'welcome') content = `<h3>환영합니다</h3><p>도덕 교육 여정에 오신 것을 환영합니다. 이곳에서 윤리적 가치를 배웁니다.</p>`;
+                    else if (topic === 'values') content = `<h3>핵심 가치</h3><p>우리는 도덕 교육의 기초로 존중, 책임, 공감을 중시합니다.</p>`;
+                    else if (topic === 'goal') content = `<h3>우리의 목표</h3><p>모든 학생들에게 강한 도덕적 원칙을 심어주는 것이 우리의 목표입니다.</p>`;
+                    break;
+                case 'about':
+                    if (topic === 'mission') content = `<h3>사이버 공간의 의미와 특징</h3><p>오늘날 우리는 컴퓨터와 정보 통신 기술이 산업의 중심이 되는 정보화 시대에 살고 있다. 사이버 공간은 현실적으로 존재하는 공간이 아니라, 컴퓨터 통신망 안에 있는 가상공간으로, 우리의 생활을 매우 편리하게 해 주고 있다. 사이버 공간의 출현은 개인 생활뿐만 아니라 사회적, 경제적 구조나 국가 간의 관계에끼지 엄청난 변화를 가져오게 되었다. 이 외에도 사이버 공간에서는 공간적 제약을 넘어 신속하게 정보를 주고받을 수 있고, 일방적으로 전보를 전달받는 것이 아니라 쌍방향 의사소통도 가능하다는 특징이 있다.</p>
+                                                      <p> <h3>사이버 공간의 도덕문제</h3><p>사이버 공간은 다양한 장점과 함께 도덕적인 문제점을 가지고 있다. 1) 정보의 홍수 속에서 자료 선택에 어려움이 있다. 2) 유익하지 않은 사이트에 쉽게 접근할 수 있다. 3) 절제하지 못할 경우 인터넷 중독에 빠질 수 있다. 4) 자신이 잘 드러나지 않는다고 무책임하게 행동할 수 있다. 위와 같은 사이버 공간의 특성에서 오는 문제 외에도 개인정보유출, 한글파괴 문제, 사이버 범죄 등 다양한 도덕 문제가 있다.  `;
+                    else if (topic === 'vision') content = `<h1>정보 시대의 도덕적 책임</h1>
+    <p>정보 시대에서 도덕적 책임은 정보의 전파, 데이터 프라이버시, 그리고 기술이 사회에 미치는 영향을 고려한 윤리적 행동을 포함합니다. 다음은 세 가지 예시입니다:</p>
+    
+    <h2>1. 데이터 프라이버시 및 보호</h2>
+    <p><strong>예시:</strong> 페이스북이나 구글과 같은 회사는 방대한 양의 사용자 데이터를 수집합니다. 이들은 데이터 유출 및 오용으로부터 정보를 보호할 도덕적 책임이 있습니다. 예를 들어, 데이터 유출이 발생할 경우 회사는 영향을 받은 사용자에게 신속하게 알리고 정보를 보호하기 위한 조치를 취해야 합니다. 그렇지 않으면 신원 도용과 디지털 생태계에 대한 신뢰 상실로 이어질 수 있습니다.</p>
+    <p><strong>도덕적 책임:</strong> 조직은 사용자 프라이버시를 우선시하고, 데이터 사용 정책을 투명하게 소통하며, 개인 정보를 보호하기 위한 강력한 보안 조치를 구현해야 합니다.</p>
+    
+    <h2>2. 허위 정보 및 가짜 뉴스</h2>
+    <p><strong>예시:</strong> 선거를 앞두고 소셜 미디어 플랫폼이 여론을 조작하거나 폭력을 조장하기 위해 허위 정보를 퍼뜨리는 경우가 있습니다. COVID-19 치료에 대한 잘못된 정보가 확산된 것이 좋은 사례입니다. 소셜 미디어 회사는 허위 콘텐츠를 모니터링하고 제거하며 검증된 정보를 홍보할 도덕적 책임이 있습니다.</p>
+    <p><strong>도덕적 책임:</strong> 미디어, 소셜 플랫폼, 개인은 정보를 공유하기 전에 사실 확인을 하고 정확한 보도를 홍보하기 위해 노력해야 합니다. 또한 사용자가 신뢰할 수 있는 출처를 식별할 수 있는 도구를 제공해야 합니다.</p>
+
+    <h2>3. 디지털 격차 및 접근성</h2>
+    <p><strong>예시:</strong> 기술의 급속한 발전은 기존의 불평등을 심화시킬 수 있습니다. 인터넷이나 디지털 장치에 접근할 수 없는 사람들은 교육 및 직업 기회에서 뒤처질 수 있습니다. 예를 들어, COVID-19 팬데믹 동안 저소득층 지역의 학생들은 신뢰할 수 있는 인터넷이나 기술에 대한 접근 부족으로 원격 학습에 어려움을 겪었습니다.</p>
+    <p><strong>도덕적 책임:</strong> 정부와 조직은 기술과 인터넷에 대한 공평한 접근을 보장할 책임이 있습니다. 이는 저소득 지역 사회를 위한 인프라에 투자하고, 저렴한 장치와 인터넷 접근 프로그램과 같은 자원을 제공하여 디지털 격차를 해소하는 것을 포함합니다.</p>`;
+                    else if (topic === 'history') content = `<h1>정보 및 커뮤니케이션 미디어를 올바르게 사용하는 태도</h1>
+    <p>정보 시대에서 정보를 올바르게 사용하고 커뮤니케이션 미디어를 활용하는 것은 매우 중요합니다. 다음은 책임 있는 접근 방식을 반영하는 몇 가지 핵심 태도입니다:</p>
+    
+    <h2>1. 비판적 사고</h2>
+    <p>정보를 비판적인 사고로 접근하는 것이 중요합니다. 이는 신뢰성을 평가하고, 공유하기 전에 사실을 확인하며, 정보의 동기를 질문하는 것을 의미합니다. 분별력 있는 태도는 잘못된 정보의 확산을 방지하고 미디어 콘텐츠와의 사려 깊은 상호작용을 촉진합니다.</p>
+    
+    <h2>2. 프라이버시 존중</h2>
+    <p>커뮤니케이션 미디어를 사용할 때 타인의 프라이버시를 존중하는 것이 기본입니다. 이는 자신의 개인 정보와 타인의 개인 정보를 공유하는 것의 의미를 이해하는 것을 포함합니다. 책임 있는 사용자는 프라이버시 설정, 데이터 보호 및 소셜 미디어 플랫폼에서의 과도한 공유의 잠재적 결과에 대해 인식해야 합니다.</p>
+    
+    <h2>3. 윤리적인 공유</h2>
+    <p>정보를 공유할 때 그 영향을 고려하는 것이 중요합니다. 윤리적인 공유는 원래 출처를 인정하고, 해당 정보를 제공하며, 해롭거나 잘못된 콘텐츠를 퍼뜨리지 않는 것을 포함합니다. 사려 깊은 접근 방식은 온라인 커뮤니티 내에서의 무결성과 책임감 있는 문화를 촉진합니다.</p>
+
+    <h2>4. 포용성과 접근성</h2>
+    <p>커뮤니케이션에서 포용성을 추구하는 것이 중요합니다. 이는 다양한 배경과 능력을 가진 청중을 염두에 두는 것을 의미합니다. 명확한 언어를 사용하고 전문 용어를 피하며, 모든 개인이 정보를 접근할 수 있도록 보장하는 것은 보다 공평한 디지털 공간을 조성합니다.</p>
+
+    <h2>5. 결과에 대한 책임</h2>
+    <p>디지털 세계에서의 행동이 실제 세계에 결과를 미친다는 것을 이해하는 것이 중요합니다. 게시물, 트윗 또는 댓글이든, 개인은 자신의 말이 다른 사람에게 어떻게 영향을 미칠 수 있는지 인식해야 합니다. 책임 있는 태도는 미디어의 힘과 긍정적 및 부정적 결과의 가능성을 인정합니다.</p>
+
+    <h2>6. 평생 학습</h2>
+    <p>디지털 환경은 끊임없이 진화하고 있으며, 새로운 기술, 트렌드 및 윤리적 기준에 대해 정보를 유지하는 것이 필수적입니다. 평생 학습에 대한 헌신은 적응력을 촉진하고 정보 및 커뮤니케이션 미디어를 사용하는 데 있어 정보에 기반한 책임 있는 접근 방식을 배양합니다.</p>
+
+    <p>결론적으로, 정보 및 커뮤니케이션 미디어를 올바르게 사용하는 긍정적인 태도는 비판적 사고, 프라이버시 존중, 윤리적인 공유, 포용성, 결과에 대한 인식 및 지속적인 학습에 대한 헌신을 포함합니다. 이러한 원칙을 구현함으로써 개인은 더 건강하고 책임 있는 디지털 환경에 기여할 수 있습니다.</p>`;
+                    break;
+                case 'lessons':
+                    if (topic === 'respect') content = `<h1>과학과 기술이 인간의 삶을 어떻게 변화시켰는가</h1>
+    <p>과학과 기술의 발전은 인류의 삶을 근본적으로 변화시켜 왔습니다. 산업혁명 이후, 그리고 정보화 시대에 접어들면서 우리의 생활 방식, 의사소통, 교육, 건강 관리 등 여러 분야에서 큰 변화가 있었습니다. 이 글에서는 이러한 변화의 몇 가지 주요 측면을 살펴보겠습니다.</p>
+    
+    <h2>1. 의사소통의 혁신</h2>
+    <p>과거에는 사람들 간의 의사소통이 편지나 전화에 의존했지만, 현재는 인터넷과 스마트폰의 발전으로 즉각적인 소통이 가능해졌습니다. 소셜 미디어 플랫폼을 통해 전 세계의 사람들과 실시간으로 연결될 수 있으며, 정보와 뉴스가 빠르게 전파됩니다. 이러한 변화는 개인의 삶뿐만 아니라 사회 전반에 큰 영향을 미쳤습니다.</p>
+
+    <h2>2. 정보 접근의 용이함</h2>
+    <p>과학과 기술의 발전 덕분에 우리는 원하는 정보를 언제 어디서나 쉽게 찾을 수 있습니다. 검색 엔진과 온라인 데이터베이스를 통해 방대한 양의 지식에 접근할 수 있게 되었으며, 이는 학습과 연구의 방식을 혁신적으로 변화시켰습니다. 학생들은 이제 온라인 강의를 통해 전 세계의 교육을 받을 수 있는 기회를 가지게 되었습니다.</p>
+
+    <h2>3. 건강 관리의 발전</h2>
+    <p>의학과 생명 과학의 발전은 건강 관리의 질을 향상시켰습니다. 진단 기술과 치료 방법의 발전으로 우리는 여러 질병을 예방하고 치료할 수 있게 되었습니다. 예를 들어, 유전자 연구는 개인 맞춤형 치료법을 개발하는 데 기여하고 있으며, 이는 환자의 회복을 촉진하는 데 중요한 역할을 하고 있습니다.</p>
+
+    <h2>4. 산업의 변화</h2>
+    <p>자동화와 로봇 기술의 발전은 산업 구조를 변화시키고 있습니다. 공장에서는 로봇이 인간의 일을 대신하며 생산성을 높이고 있습니다. 이는 고용 시장에도 큰 영향을 미치고 있으며, 기술 숙련도가 높은 인력의 필요성이 증가하고 있습니다. 그러나 이로 인해 일부 직업은 사라지기도 하여 사회적 논의가 필요합니다.</p>
+
+    <h2>5. 일상 생활의 편리함</h2>
+    <p>기술은 우리의 일상 생활을 더욱 편리하게 만들어 주었습니다. 가전 제품의 자동화와 스마트 홈 기술의 발전으로 우리는 효율적으로 가사를 관리할 수 있게 되었습니다. 또한, 온라인 쇼핑과 배달 서비스는 소비 방식에 큰 변화를 가져왔습니다.</p>
+
+    <h2>결론</h2>
+    <p>과학과 기술은 인류의 삶을 다양한 방식으로 변화시켰습니다. 이들은 의사소통, 정보 접근, 건강 관리, 산업 구조, 일상 생활의 편리함 등 여러 분야에서 혁신을 가져왔습니다. 그러나 이러한 변화는 긍정적인 면만 있는 것은 아니며, 사회적 불평등, 개인 정보 보호 문제 등 새로운 도전과제도 함께 나타나고 있습니다. 앞으로의 기술 발전이 더 나은 세상을 만들어 가는 데 기여할 수 있도록, 우리는 그 방향성을 고민해야 할 것입니다.</p>`;
+                    else if (topic === 'honesty') content = `<h1>과학과 기술이 모든 문제를 해결할 수 있는가?</h1>
+    <p>과학과 기술은 인류의 삶을 혁신적으로 변화시키는 힘을 가지고 있습니다. 우리는 과학적 발견과 기술적 발전 덕분에 많은 문제를 해결할 수 있게 되었지만, 모든 문제를 해결할 수 있는가에 대한 질문은 여전히 유효합니다. 이 글에서는 과학과 기술이 가진 장점과 한계를 살펴보겠습니다.</p>
+    
+    <h2>1. 과학과 기술의 긍정적인 영향</h2>
+    <p>과학과 기술은 여러 분야에서 놀라운 성과를 이루어냈습니다. 의료 분야에서는 질병의 예방과 치료가 가능해졌고, 통신 기술은 전 세계의 사람들을 즉각적으로 연결할 수 있게 해주었습니다. 농업 기술의 발전으로 식량 생산성이 증가하였으며, 환경 문제를 해결하기 위한 기술도 발전하고 있습니다.</p>
+
+    <h2>2. 한계와 도전 과제</h2>
+    <p>그러나 과학과 기술이 모든 문제를 해결할 수 있는 것은 아닙니다. 많은 사회적, 윤리적 문제는 기술만으로 해결할 수 없습니다. 예를 들어, 기후 변화 문제는 과학과 기술의 도움으로 어느 정도 해결할 수 있지만, 정치적 의지와 사회적 합의가 없다면 실질적인 변화를 이루기 어렵습니다. 또한, 기술의 발전이 일자리 감소와 같은 부정적인 영향을 미칠 수 있으며, 이는 사회적 불평등을 심화시킬 수 있습니다.</p>
+
+    <h2>3. 윤리적 고려 사항</h2>
+    <p>과학과 기술의 발전은 윤리적 문제를 동반하기도 합니다. 인공지능과 유전자 편집 기술 등은 인류에게 큰 혜택을 줄 수 있지만, 이와 함께 개인의 프라이버시 문제, 생명 윤리 문제 등도 야기할 수 있습니다. 따라서 기술의 발전에 대한 사회적 논의와 윤리적 고려가 반드시 필요합니다.</p>
+
+    <h2>4. 지속 가능한 해결책을 위한 협력</h2>
+    <p>과학과 기술은 문제 해결의 중요한 도구이지만, 사회적 문제를 해결하기 위해서는 다양한 분야의 협력이 필요합니다. 정부, 기업, 시민 사회가 함께 협력하여 문제를 해결하는 노력이 필요합니다. 이는 기술이 단순한 도구가 아니라, 사람들의 삶을 향상시키기 위한 종합적인 접근의 일환임을 의미합니다.</p>
+
+    <h2>결론</h2>
+    <p>과학과 기술은 많은 문제를 해결할 수 있는 강력한 도구이지만, 모든 문제를 해결할 수 있는 만능 해결책은 아닙니다. 문제 해결에는 기술적 접근 외에도 사회적, 윤리적 고려가 필요하며, 이를 위해 다양한 이해관계자의 협력이 필수적입니다. 따라서 과학과 기술을 올바르게 활용하여 지속 가능한 미래를 만들어 가는 것이 중요합니다.</p>`;
+                    else if (topic === 'responsibility') content = `<h1>과학과 기술에 대한 책임이 필요한 이유</h1>
+    <p>과학과 기술은 현대 사회의 발전에 중요한 기여를 하고 있습니다. 그러나 이러한 발전이 가져오는 긍정적인 영향과 함께 여러 가지 도전 과제와 위험 요소도 존재합니다. 따라서 과학과 기술에 대한 책임 있는 접근이 필요합니다. 이 글에서는 그 이유를 살펴보겠습니다.</p>
+    
+    <h2>1. 안전성과 윤리</h2>
+    <p>과학과 기술의 발전은 때때로 안전 문제를 초래할 수 있습니다. 예를 들어, 유전자 편집 기술이나 인공지능의 발전은 많은 가능성을 열어주지만, 동시에 윤리적 문제도 동반합니다. 책임 있는 연구와 개발이 없다면, 이는 개인의 생명과 안전에 위협이 될 수 있습니다. 따라서 윤리적 기준을 준수하고, 연구의 안전성을 확보하는 것이 필수적입니다.</p>
+
+    <h2>2. 사회적 영향</h2>
+    <p>과학과 기술은 사회에 큰 영향을 미칩니다. 예를 들어, 자동화 기술의 발전은 일자리 감소를 초래할 수 있으며, 이는 경제적 불평등을 심화시킬 수 있습니다. 따라서 기술 발전의 사회적 영향을 분석하고, 이러한 변화에 대응하기 위한 정책적 노력이 필요합니다. 과학자와 기술자들은 이러한 책임을 다해야 합니다.</p>
+
+    <h2>3. 지속 가능한 발전</h2>
+    <p>기후 변화와 같은 글로벌 문제는 과학과 기술의 도움이 필요합니다. 그러나 이를 해결하기 위해서는 지속 가능한 발전을 고려해야 합니다. 기술의 발전이 환경에 미치는 영향을 최소화하고, 지속 가능한 자원 사용을 촉진하는 것이 중요합니다. 책임 있는 과학과 기술 발전은 미래 세대에 긍정적인 영향을 미칠 수 있습니다.</p>
+
+    <h2>4. 정보의 정확성</h2>
+    <p>정보 통신 기술의 발전으로 인해 잘못된 정보가 빠르게 확산될 수 있는 시대가 되었습니다. 이는 사회적으로 큰 혼란을 초래할 수 있으며, 정확한 정보의 제공이 중요합니다. 과학자와 기술자들은 자신이 제공하는 정보의 신뢰성을 책임져야 하며, 대중이 올바른 결정을 내릴 수 있도록 해야 합니다.</p>
+
+    <h2>5. 공공의 신뢰</h2>
+    <p>과학과 기술에 대한 신뢰는 사회 전반의 발전에 필수적입니다. 연구의 투명성을 높이고, 대중과의 소통을 강화하여 과학에 대한 신뢰를 구축해야 합니다. 이는 연구자와 기술자가 그들의 책임을 다하는 방법이기도 합니다.</p>
+
+    <h2>결론</h2>
+    <p>과학과 기술은 우리의 삶을 향상시킬 수 있는 잠재력을 가지고 있지만, 그 발전에 대한 책임 있는 접근이 필요합니다. 안전성과 윤리, 사회적 영향, 지속 가능한 발전, 정보의 정확성, 공공의 신뢰 등 여러 측면에서 책임을 다해야 합니다. 이러한 책임을 다함으로써 우리는 과학과 기술이 인류에게 긍정적인 기여를 할 수 있도록 할 수 있습니다.</p>`;
+                    break;
+                case 'contact':
+                    if (topic === 'support') content = `<h1>삶을 소중하게 만드는 것</h1>
+    <p>삶이 소중하다는 것은 많은 사람들이 느끼는 공통된 감정입니다. 그러나 '소중함'이란 무엇인지, 그리고 그것이 어떻게 우리의 삶을 더욱 가치 있게 만드는지를 탐구하는 것은 중요한 주제입니다. 이 글에서는 삶을 소중하게 만드는 여러 요소를 살펴보겠습니다.</p>
+    
+    <h2>1. 관계의 중요성</h2>
+    <p>가족, 친구, 사랑하는 사람들과의 관계는 삶의 큰 기쁨을 가져다줍니다. 이러한 관계는 서로에게 지지와 사랑을 주며, 어려운 시기에 함께해주는 소중한 존재가 됩니다. 인간은 사회적 존재로서, 이러한 유대감이 삶을 더욱 의미 있게 만들어 줍니다.</p>
+
+    <h2>2. 경험과 배움</h2>
+    <p>삶의 소중함은 다양한 경험에서 비롯됩니다. 새로운 것을 배우고, 여행을 하고, 다양한 문화와 사람들을 만나는 것은 우리의 시야를 넓히고 인생의 의미를 깊게 만들어 줍니다. 경험을 통해 우리는 성장하고, 더욱 풍요로운 삶을 누릴 수 있습니다.</p>
+
+    <h2>3. 사랑과 감정</h2>
+    <p>사랑은 삶을 특별하게 만드는 강력한 힘입니다. 사랑을 주고받는 것은 우리에게 행복과 만족을 주며, 삶의 어려움을 이겨내는 원동력이 됩니다. 또한, 다양한 감정을 느끼는 것은 우리가 인간으로서 진정한 경험을 하게 해줍니다.</p>
+
+    <h2>4. 목표와 꿈</h2>
+    <p>각자가 설정한 목표와 꿈은 삶의 방향성을 제공합니다. 목표를 향해 나아가는 과정에서 우리는 도전과 성취감을 느끼게 되며, 이는 우리 삶의 가치를 높여줍니다. 꿈을 이루기 위한 노력은 삶을 더욱 의미 있게 만들어 줍니다.</p>
+
+    <h2>5. 자연과의 연결</h2>
+    <p>자연은 우리의 삶에서 중요한 역할을 합니다. 아름다운 경치를 감상하고, 자연 속에서 휴식을 취하는 것은 우리의 정신적, 신체적 건강에 긍정적인 영향을 미칩니다. 자연과의 연결을 통해 우리는 삶의 소중함을 다시 한번 느끼게 됩니다.</p>
+
+    <h2>결론</h2>
+    <p>삶을 소중하게 만드는 요소는 여러 가지가 있습니다. 관계, 경험, 사랑, 목표, 자연 등은 우리에게 의미 있는 삶을 선사하며, 이러한 요소들이 서로 연결되어 우리의 삶을 더욱 풍요롭고 소중하게 만들어 줍니다. 우리는 이러한 소중한 것들을 잊지 않고, 매일매일을 감사히 살아가야 합니다.</p>`;
+                    else if (topic === 'feedback') content = `<h1>죽음에 대한 생각</h1>
+    <p>죽음은 인간 존재의 본질적인 부분이며, 모든 사람이 마주해야 하는 현실입니다. 그러나 죽음을 어떻게 바라보느냐에 따라 삶의 질이 달라질 수 있습니다. 이 교재에서는 죽음에 대한 건강한 사고방식을 탐구하고, 삶의 의미를 재조명하는 방법을 제시합니다.</p>
+
+    <h2>1. 죽음을 받아들이기</h2>
+    <p>죽음을 두려워하기보다는 그것을 자연스러운 과정으로 받아들이는 것이 중요합니다. 모든 생명체는 태어나고 죽습니다. 이러한 사실을 인식함으로써 우리는 죽음에 대한 두려움을 덜고, 삶을 더 소중히 여길 수 있습니다.</p>
+
+    <h2>2. 죽음의 의미 탐구</h2>
+    <p>죽음은 삶의 끝이 아니라, 새로운 시작으로 볼 수도 있습니다. 많은 문화와 종교에서 죽음은 영혼의 여행이나 다음 생으로의 전환으로 이해됩니다. 이러한 관점을 통해 우리는 죽음을 보다 긍정적으로 바라볼 수 있습니다.</p>
+
+    <h2>3. 삶의 소중함 인식하기</h2>
+    <p>죽음을 생각함으로써 우리는 현재의 삶을 더욱 소중히 여길 수 있습니다. 매일의 순간이 귀중하며, 사랑하는 사람들과의 관계, 자신의 꿈과 목표를 추구하는 것이 얼마나 중요한지를 깨닫게 됩니다.</p>
+
+    <h2>4. 남은 시간의 가치</h2>
+    <p>죽음을 인식하는 것은 우리에게 남은 시간의 가치를 일깨워 줍니다. 우리가 얼마나 많은 시간을 헛되이 보내고 있는지를 돌아보게 되고, 의미 있는 삶을 위해 어떤 선택을 해야 할지를 고민하게 됩니다.</p>
+
+    <h2>5. 죽음에 대한 대화</h2>
+    <p>죽음에 대한 대화를 나누는 것은 어려울 수 있지만, 이를 통해 우리는 서로의 감정을 이해하고, 죽음에 대한 두려움을 줄일 수 있습니다. 가족이나 친구들과의 대화는 서로의 생각을 공유하고, 죽음에 대한 관점을 넓히는 데 도움이 됩니다.</p>
+
+    <h2>6. 삶의 목적 찾기</h2>
+    <p>죽음을 생각하는 것은 우리가 삶의 목적을 찾는 데 도움을 줍니다. 각자의 가치는 다르지만, 우리는 모두 자신의 삶에서 의미와 목적을 발견하고자 합니다. 죽음이 우리의 존재를 종결짓는 것이 아니라는 사실을 통해 우리는 더욱 강력한 삶의 동기를 찾을 수 있습니다.</p>
+
+    <h2>결론</h2>
+    <p>죽음에 대한 건강한 사고방식은 우리 삶을 더욱 풍요롭게 만들어 줍니다. 죽음을 두려워하기보다는, 그것을 삶의 일부로 받아들이고, 현재를 소중히 여기며, 삶의 의미를 찾는 과정이 필요합니다. 죽음에 대한 생각은 우리가 어떻게 살아가야 할지를 성찰하게 해주며, 궁극적으로 더 나은 삶을 위한 길잡이가 될 것입니다.</p>
+</body>`;
+                    else if (topic === 'inquiry') content = `<h1>의미 있는 삶을 위한 도전</h1>
+    <p>의미 있는 삶을 살기 위해서는 명확한 목표와 가치관을 가지고, 자신의 행동과 선택이 그 목표에 어떻게 기여하는지를 고민하는 것이 중요합니다. 이 교재에서는 의미 있는 삶을 살기 위한 여러 가지 방법과 실천할 수 있는 전략을 제시합니다.</p>
+
+    <h2>1. 목표 설정하기</h2>
+    <p>의미 있는 삶은 목표가 있어야 가능하다는 것을 기억하세요. 각자의 가치에 따라 목표를 설정하고, 그 목표를 이루기 위한 계획을 세우는 것이 중요합니다. 목표는 크고 작을 상관없이, 자신의 삶을 가이드하는 역할을 합니다.</p>
+
+    <h2>2. 자신의 가치관 탐색하기</h2>
+    <p>자신의 가치관을 이해하는 것은 의미 있는 삶을 위한 첫걸음입니다. 무엇이 중요한지, 어떤 가치가 자신을 이끄는지 깊이 생각해 보세요. 이 과정은 여러분이 어떤 방향으로 나아가야 할지를 결정하는 데 도움이 됩니다.</p>
+
+    <h2>3. 긍정적인 관계 맺기</h2>
+    <p>가족, 친구, 동료와의 관계는 우리의 삶에 큰 영향을 미칩니다. 긍정적이고 지지적인 관계를 유지하는 것은 삶의 의미를 더해줍니다. 소중한 사람들과의 시간을 보내고, 서로의 삶에 긍정적인 영향을 미치도록 노력하세요.</p>
+
+    <h2>4. 지속적인 배움 추구하기</h2>
+    <p>의미 있는 삶은 끊임없는 배움과 성장을 포함합니다. 새로운 지식을 습득하고 다양한 경험을 통해 자신을 발전시키세요. 독서, 여행, 새로운 취미를 통해 당신의 시야를 넓히는 것이 중요합니다.</p>
+
+    <h2>5. 도움을 주는 삶 살기</h2>
+    <p>다른 사람에게 도움을 주는 것은 삶의 큰 의미를 가져다줍니다. 자원봉사, 멘토링, 또는 단순한 친절을 통해 다른 이들에게 긍정적인 영향을 미치는 방법을 찾아보세요. 타인을 돕는 과정에서 자신의 삶의 의미를 발견할 수 있습니다.</p>
+
+    <h2>6. 순간을 즐기기</h2>
+    <p>미래에 대한 걱정이나 과거에 대한 후회보다는 현재를 살아가는 것이 중요합니다. 일상의 작은 것들에서 기쁨을 찾고, 순간을 소중히 여기는 연습을 하세요. 감사의 마음을 가지고 매일을 보내는 것이 의미 있는 삶의 기본입니다.</p>
+
+    <h2>7. 자기 반성과 성장</h2>
+    <p>정기적으로 자신의 행동과 생각을 반성하는 시간을 가지세요. 이 과정은 자신의 성장과 발전을 위해 필수적입니다. 반성을 통해 스스로의 가치와 목표를 재조명하고, 필요하다면 방향을 수정하는 것이 중요합니다.</p>
+
+    <h2>결론</h2>
+    <p>의미 있는 삶은 각자의 선택과 행동에서 시작됩니다. 목표를 설정하고, 가치관을 탐색하며, 긍정적인 관계를 형성하고, 지속적인 배움을 추구하는 것이 중요합니다. 삶의 의미는 각자가 만들어가는 것이므로, 여러분의 여정에 최선을 다해보세요.</p>`;
+                    break;
+            }
+
+            rightColumn.innerHTML = content;
+        }
+
+        function capitalize(word) {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+    </script>
+
+<!-- 새로운 피드백 섹션 -->
+<div id="feedback" class="content">
+    <div class="feedback-container">
+        <h2>안락사에 대한 자신의 찬반 입장을 밝히고 그렇게 생각한 이유(근거)를 적어보세요:</h2>
+        <textarea id="studentInput" placeholder="생각을 입력하세요"></textarea>
+        <button onclick="addFeedback()">제출</button>
+    </div>
+
+    <!-- 학생의 생각 비교 영역 -->
+    <div id="feedbackList">
+        <h3>입력한 생각들:</h3>
+    </div>
+</div>
+<script>
+    function showContent(id) {
+        const sections = document.querySelectorAll('.content');
+        sections.forEach(section => section.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+
+        // Reset the right column content for each section
+        if (id !== 'feedback') {
+            const rightColumn = document.getElementById(`${id}-right`);
+            rightColumn.innerHTML = `<h2>${capitalize(id)}</h2><p>여러 도덕적 주제에 대해 자율적으로 공부해보세요.</p>`;
+        }
+    }
+
+    function addFeedback() {
+        // 입력된 내용 가져오기
+        const input = document.getElementById('studentInput').value;
+
+        // 입력값이 없으면 함수를 종료
+        if (!input) return;
+
+        // 피드백 영역 생성
+        const feedback = document.createElement('div');
+        feedback.classList.add('feedback');
+        feedback.innerText = input;
+
+        // 피드백을 하단 목록에 추가
+        const feedbackList = document.getElementById('feedbackList');
+        feedbackList.appendChild(feedback);
+
+        // 입력창 비우기
+        document.getElementById('studentInput').value = '';
+    }
+
+    function capitalize(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+</script>
+    <!-- Claude에게 물어보기 섹션 -->
+    <div id="gpt" class="content">
+        <div class="gpt-container">
+            <h2>Claude에게 질문하세요:</h2>
+            <textarea id="gptInput" placeholder="질문을 입력하세요"></textarea>
+            <button onclick="askClaude()">질문 제출</button>
+        </div>
+
+        <!-- Claude의 응답 표시 영역 -->
+        <div id="gptResponseList">
+            <h3>Claude의 응답:</h3>
+        </div>
+    </div>
+
+    <script>
+        function showContent(id) {
+            const sections = document.querySelectorAll('.content');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+
+            if (id !== 'feedback' && id !== 'gpt') {
+                const rightColumn = document.getElementById(`${id}-right`);
+                rightColumn.innerHTML = `<h2>${capitalize(id)}</h2><p>여러 도덕적 주제에 대해 자율적으로 공부해보세요.</p>`;
+            }
+        }
+
+        function addFeedback() {
+            const input = document.getElementById('studentInput').value;
+            if (!input) return;
+
+            const feedback = document.createElement('div');
+            feedback.classList.add('feedback');
+            feedback.innerText = input;
+
+            const feedbackList = document.getElementById('feedbackList');
+            feedbackList.appendChild(feedback);
+
+            document.getElementById('studentInput').value = '';
+        }
+
+        async function askClaude() {
+            const question = document.getElementById('gptInput').value;
+            if (!question) return;
+
+            const response = await fetch('https://api.anthropic.com/v1/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': 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
+                },
+                body: JSON.stringify({
+                    model: 'claude-v1',
+                    prompt: question,
+                    max_tokens_to_sample: 100
+                })
+            });
+
+            const data = await response.json();
+            const clauderesponse = document.createElement('div');
+            clauderesponse.classList.add('gpt-response');
+            clauderesponse.innerText = data.completion.trim();
+
+            const responseList = document.getElementById('gptResponseList');
+            responseList.appendChild(clauderesponse);
+
+            document.getElementById('gptInput').value = '';
+        }
+
+        function capitalize(word) {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+    </script>
+
+</body>
+</html>

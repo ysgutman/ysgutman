@@ -444,31 +444,31 @@
         }
 
         async function askClaude() {
-            const question = document.getElementById('gptInput').value;
-            if (!question) return;
+    const question = document.getElementById('gptInput').value;
+    if (!question) return;
 
-            const response = await fetch('https://api.anthropic.com/v1/complete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': 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
-                },
-                body: JSON.stringify({
-                    model: 'claude-v1',
-                    prompt: question,
-                    max_tokens_to_sample: 100
-                })
-            });
+    const response = await fetch('https://api.anthropic.com/v1/complete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': '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'
+        },
+        body: JSON.stringify({
+            model: 'claude-v1',
+            prompt: question,
+            max_tokens_to_sample: 100
+        })
+    });
 
-            const data = await response.json();
-            const clauderesponse = document.createElement('div');
-            clauderesponse.classList.add('gpt-response');
-            clauderesponse.innerText = data.completion.trim();
+    const data = await response.json();
+    const clauderesponse = document.createElement('div');
+    clauderesponse.classList.add('gpt-response');
+    clauderesponse.innerText = data.completion.trim();
 
-            const responseList = document.getElementById('gptResponseList');
-            responseList.appendChild(clauderesponse);
+    const responseList = document.getElementById('gptResponseList');
+    responseList.appendChild(clauderesponse);
 
-            document.getElementById('gptInput').value = '';
+    document.getElementById('gptInput').value = '';
         }
 
         function capitalize(word) {

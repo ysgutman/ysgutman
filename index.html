@@ -429,17 +429,6 @@
     </div>
 
     <script>
-        function showContent(id) {
-            const sections = document.querySelectorAll('.content');
-            sections.forEach(section => section.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-
-            if (id !== 'feedback' && id !== 'gpt') {
-                const rightColumn = document.getElementById(`${id}-right`);
-                rightColumn.innerHTML = `<h2>${capitalize(id)}</h2><p>여러 도덕적 주제에 대해 자율적으로 공부해보세요.</p>`;
-            }
-        }
-
         function addFeedback() {
             const input = document.getElementById('studentInput').value;
             if (!input) return;
